@@ -1,0 +1,25 @@
+#todoElement_done{
+    display: flex;
+    justify-content: right;
+    background-color: green;
+    border: 1px solid black;
+}
+#todoElement_done :first-child{
+    margin: auto;
+}
+
+#todoElement_false{
+    display: flex;
+    justify-content: right;
+    background-color: red;
+    border: 1px solid black;
+}
+#todoElement_false :first-child{
+    margin: auto;
+}
+Button{
+   width: 80px;
+}
+.description{
+    height:64px;
+}
