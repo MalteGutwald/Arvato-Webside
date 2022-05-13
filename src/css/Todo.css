@@ -1,25 +1,36 @@
-#todoElement_done{
+.todoElement_done{
     display: flex;
     justify-content: right;
     background-color: green;
     border: 1px solid black;
 }
-#todoElement_done :first-child{
-    margin: auto;
-}
-
-#todoElement_false{
+.todoElement_false{
     display: flex;
     justify-content: right;
     background-color: red;
     border: 1px solid black;
 }
-#todoElement_false :first-child{
+.todoElement_done :first-child{
     margin: auto;
 }
+.todoElement_false :first-child{
+    margin: auto;
+}
+
 Button{
    width: 80px;
 }
 .description{
     height:64px;
+}
+p{
+    padding-left: 10px;
+    text-align: left;
+    font-size: 30px;
+    width: 100%;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;              /* "overflow"-Wert darf nicht "visible" sein */
+
+    text-overflow: ellipsis;
 }

@@ -5,10 +5,10 @@ import {Button} from 'reactstrap'
 function Todo( {description, done, onChangeTodo, onRemoveTodo, index}) {
   return (
     done ?
-    <div id="todoElement_done">
-        <h3 className='description'>
+    <div className="todoElement_done">
+        <p className='description'>
             {description}
-        </h3>
+        </p>
         <Button
           onClick={() => onChangeTodo(index)}
         >nicht erledigt</Button>
@@ -18,10 +18,10 @@ function Todo( {description, done, onChangeTodo, onRemoveTodo, index}) {
        <div></div>
     </div>
     :
-    <div id="todoElement_false">
-        <h3 className='description'>
+    <div className="todoElement_false">
+        <p className='description'>
             {description}
-        </h3>
+        </p>
         <Button
           onClick={() => onChangeTodo(index)}
       >erledigt</Button>

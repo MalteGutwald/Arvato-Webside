@@ -38,7 +38,14 @@ div #taskList :last-child{
 #error2{
     display: none
 }
-@media (max-width: 800px) {
+.taskList{
+    background-color: #4a403f;
+}
+.taskList p{
+    color: #ffffff;
+    margin-bottom: 0;
+}
+@media (max-width: 1000px) {
     #taskList{
         margin-top: 50px;
         margin-left: 10%;
