@@ -100,6 +100,11 @@ function List() {
     setTodos(newTodos);
   }
   const removeTodo = (index) => {
+    document.getElementById("error4").style.display = "block";
+    setTimeout(() => {  
+      document.getElementById("error4").style.display = "none";
+    }, 5000);
+
     const newTodos = [...todos]
     const startValue = ((page-1) * itemsPerPage);
       newTodos.splice(index + startValue,1);
@@ -167,6 +172,11 @@ function List() {
       }, 5000);
     }
     else{
+      document.getElementById("error3").style.display = "block";
+      setTimeout(() => {  
+        document.getElementById("error3").style.display = "none";
+      }, 5000);
+
       const newTodos = [...todos, {description: textInput, done: false}]
       setTodos(newTodos);
       //warum wird hier todos nicht verändert?
@@ -220,7 +230,16 @@ function List() {
       >
         <p>You already have a Task with that name.</p>  
       </Alert>
-
+      <Alert
+        id="error3"
+      >
+        <p>Task Added</p>  
+      </Alert>
+      <Alert
+        id="error4"
+      >
+        <p>Task Removed</p>  
+      </Alert>
       <p>Elements per Page</p>
       <Input
         type="select"
