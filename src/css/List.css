@@ -38,12 +38,6 @@ div #taskList :last-child{
 #error2{
     display: none
 }
-#error3{
-    display: none
-}
-#error4{
-    display: none
-}
 .taskList{
     background-color: #4a403f;
 }

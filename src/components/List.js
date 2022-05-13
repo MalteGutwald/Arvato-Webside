@@ -27,6 +27,7 @@ function List() {
   const itemsPerPageOptions = ["5","10","15","20"];
 
   const [textInput, setTextInput] = useState("");
+  const [taskNameInput, setTaskNameInput] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState("5");
   const [page, setPage] = useState(1);
  
@@ -70,6 +71,9 @@ function List() {
   const changeText = (e) => {
     setTextInput(e.target.value);
   }
+  const changeTaskName = (e) => {
+    setTaskNameInput(e.target.value);
+  }
 
   const changePageOptions = (e) => {
     const todosCoppy = [...todos];
@@ -100,11 +104,6 @@ function List() {
     setTodos(newTodos);
   }
   const removeTodo = (index) => {
-    document.getElementById("error4").style.display = "block";
-    setTimeout(() => {  
-      document.getElementById("error4").style.display = "none";
-    }, 5000);
-
     const newTodos = [...todos]
     const startValue = ((page-1) * itemsPerPage);
       newTodos.splice(index + startValue,1);
@@ -151,6 +150,35 @@ function List() {
     }
   }
 
+  const searchTodo = () => {
+    const todosCoppy = [...todos];
+    const searchTaskList = [];
+
+    if(taskNameInput.length !==0){
+      const dropdown1 = document.getElementById("selectItemsPerPage");
+      dropdown1.disabled = true;
+      const dropdown2 = document.getElementById("selectPage");
+      dropdown2.disabled = true;
+
+      for(let i =0; i < todosCoppy.length; i++){
+        if (todos[i].description.includes(taskNameInput)) {
+          searchTaskList.push(todos[i]);
+        }
+      }
+      setListElements(searchTaskList);
+    }
+    else{
+      const dropdown1 = document.getElementById("selectItemsPerPage");
+      dropdown1.disabled = false;
+      const dropdown2 = document.getElementById("selectPage");
+      dropdown2.disabled = false;
+
+      const todosCoppy = [...todos]
+      var listElements = todosCoppy.slice((page-1) * itemsPerPage, itemsPerPage);
+      setListElements(listElements);
+    } 
+  }
+
   const addTodo = () => {
     var containsTextInput = false;
     for(var i=0; i < todos.length; i++){
@@ -163,20 +191,16 @@ function List() {
       document.getElementById("error1").style.display = "block";
       setTimeout(() => {  
         document.getElementById("error1").style.display = "none";
-      }, 5000);
+      }, 2500);
     }
-    if(containsTextInput) {
+    // bereits vorhanden
+    else if(containsTextInput) {
       document.getElementById("error2").style.display = "block";
       setTimeout(() => {  
         document.getElementById("error2").style.display = "none";
-      }, 5000);
+      }, 2500);
     }
     else{
-      document.getElementById("error3").style.display = "block";
-      setTimeout(() => {  
-        document.getElementById("error3").style.display = "none";
-      }, 5000);
-
       const newTodos = [...todos, {description: textInput, done: false}]
       setTodos(newTodos);
       //warum wird hier todos nicht verändert?
@@ -230,18 +254,9 @@ function List() {
       >
         <p>You already have a Task with that name.</p>  
       </Alert>
-      <Alert
-        id="error3"
-      >
-        <p>Task Added</p>  
-      </Alert>
-      <Alert
-        id="error4"
-      >
-        <p>Task Removed</p>  
-      </Alert>
       <p>Elements per Page</p>
       <Input
+        id = "selectItemsPerPage"
         type="select"
         onChange={changeItemsPerPage}
       >
@@ -260,6 +275,7 @@ function List() {
       <p>Page {page}</p>
 
       <Input
+        id = "selectPage"
         type="select"
         onChange={changePage}
         value={page}
@@ -278,9 +294,12 @@ function List() {
 
       <div className='searchTask'>
         <input
+          placeholder="Enter Taskname"
+          onChange={changeTaskName}
+          value={taskNameInput}
         ></input>
         <Button
-            onClick={addTodo}
+            onClick={searchTodo}
           >Search</Button>
       </div>
 
