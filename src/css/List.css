@@ -1,3 +1,42 @@
+
+.selectPageDiv{
+    display: flex;
+    padding-top: 10px;
+}
+.selectPageDiv p{
+    display: inline;
+    width: 25%;
+    font-size: 15px;
+}
+.selectPageDiv #selectPage{
+    display: inline;
+    width: 25%;
+}
+.selectItemsPerPageDiv{
+    display: flex;
+}
+.selectItemsPerPageDiv p{
+    font-size: 15px;
+    display: inline;
+    width: 25%;
+}
+.selectItemsPerPageDiv #selectItemsPerPage{
+    display: inline;
+    width: 25%;
+}
+.searchTaskDiv{
+    width: 50%;
+    display: flex;
+}
+.searchTaskDiv :first-child{
+    display: inline;
+    width: 100%;
+}
+.searchTaskDiv #searchTodoButton{
+    display: inline;
+    width: 100%;
+}
+
 #taskList{
     margin-top: 50px;
     margin-left: 25%;

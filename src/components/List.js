@@ -240,7 +240,7 @@ function List() {
         <b>Womit ich mich beschäftigt habe:</b>
       </div>
       <div className='taskList'>
-        <p>Todo-List</p>
+        <p>Todo-List - total Tasks: {todos.length}</p>
       </div>
       <Alert
         id="error1"
@@ -254,56 +254,64 @@ function List() {
       >
         <p>You already have a Task with that name.</p>  
       </Alert>
-      <p>Elements per Page</p>
-      <Input
-        id = "selectItemsPerPage"
-        type="select"
-        onChange={changeItemsPerPage}
-      >
-        {
-          itemsPerPageOptions.map((item, index) => {
-            return <option
-              key={index}
-              value={item}
-              >
-                {item}
-              </option>
-          })
-        }
-      </Input>
 
-      <p>Page {page}</p>
+      <div className='selectPageDiv'>
+        <p>Page:</p>
 
-      <Input
-        id = "selectPage"
-        type="select"
-        onChange={changePage}
-        value={page}
-      >
-        {
-          pageOptions.map((item, index) => {
-            return <option
-              key={index}
-              value={item}
-              >
-                {item}
-              </option>
-          })
-        }
-      </Input>
+        <Input
+          id = "selectPage"
+          type="select"
+          onChange={changePage}
+          value={page}
+        >
+          {
+            pageOptions.map((item, index) => {
+              return <option
+                key={index}
+                value={item}
+                >
+                  {item}
+                </option>
+            })
+          }
+        </Input>
+      </div>
+  
+      <div className='selectItemsPerPageDiv'>
+        <p>Per Page:</p>
 
-      <div className='searchTask'>
+        <Input
+          id = "selectItemsPerPage"
+          type="select"
+          onChange={changeItemsPerPage}
+        >
+          {
+            itemsPerPageOptions.map((item, index) => {
+              return <option
+                key={index}
+                value={item}
+                >
+                  {item}
+                </option>
+            })
+          }
+        </Input>
+
+        <div className='searchTaskDiv'>
         <input
           placeholder="Enter Taskname"
           onChange={changeTaskName}
           value={taskNameInput}
         ></input>
         <Button
+            id="searchTodoButton"
             onClick={searchTodo}
-          >Search</Button>
+        >Search
+        </Button>
+        <div></div>
       </div>
 
-
+      </div>
       {
         listElements.map((item, index) => {
           return <Todo
