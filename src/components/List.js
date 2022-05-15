@@ -213,7 +213,8 @@ function List() {
       dropdown2.disabled = false;
 
       const todosCoppy = [...todos]
-      var listElements = todosCoppy.slice((page-1) * itemsPerPage, itemsPerPage);
+      var listElements = todosCoppy.slice((page-1) * itemsPerPage, todosCoppy.length);
+
       setListElements(listElements);
       document.getElementById("removeSearchButton").style.display = "none";
     } 
