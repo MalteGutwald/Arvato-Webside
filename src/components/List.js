@@ -5,26 +5,47 @@ import {useState} from "react";
 import {Alert, Button, Input } from 'reactstrap';
 
 function List() {
+  const itemsPerPageOptions = ["5","10","15","20"];
+  const initialPageOptions = ["1","2","3","4"];
+
+  const initialList = [
+    {description: "Lorem ",done: true},
+    {description: "ipsum ",done: false},
+    {description: "dolor ",done: true},
+    {description: "sit ",done: false},
+    {description: "amet",done: true},
+    {description: "consetetur ",done: true},
+    {description: "sadipscing ",done: true},
+    {description: "elitr",done: false},
+    {description: "sed ",done: false},
+    {description: "diam ",done: true},
+    {description: "nonumy ",done: true},
+    {description: "eirmod ",done: true},
+    {description: "tempor ",done: true},
+    {description: "invidunt ",done: true},
+    {description: "ut ",done: true},
+    {description: "labore ",done: true},
+    {description: "et ",done: true},
+    {description: "dolore",done: true}
+];
+
   const [todos, setTodos] = useState(() =>{
     const items = localStorage.getItem("items");
     const parsed = JSON.parse(items);
-    return parsed || [];
+    return parsed || initialList;
   });
 
   const [pageOptions, setPageOptions] = useState(() =>{
     const items = localStorage.getItem("items");
     const parsed = JSON.parse(items);
+    
+    if (parsed === null) {
+      return initialPageOptions;
+    }
     const pages = Math.ceil(parsed.length / 5);
     const pagesArray = Array(pages).fill().map((_, pages) => pages+1);
-    if (pagesArray.length === 0) {
-      return ["1"]
-    }
-    else{
-      return pagesArray;
-    }
+    return pagesArray;
   });
-
-  const itemsPerPageOptions = ["5","10","15","20"];
 
   const [textInput, setTextInput] = useState("");
   const [taskNameInput, setTaskNameInput] = useState("");
