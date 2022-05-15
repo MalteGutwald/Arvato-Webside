@@ -34,3 +34,13 @@ p{
 
     text-overflow: ellipsis;
 }
+@media (max-width: 1000px) {
+    p{
+        font-size: 25px;
+    }
+}
+@media (max-width: 600px) {
+    p{
+        font-size: 20px;
+    }
+}

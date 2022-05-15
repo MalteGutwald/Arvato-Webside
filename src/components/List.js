@@ -149,6 +149,18 @@ function List() {
       setListElements(listElements);
     }
   }
+  const removeSearchTodo = () => {
+    const dropdown1 = document.getElementById("selectItemsPerPage");
+    dropdown1.disabled = false;
+    const dropdown2 = document.getElementById("selectPage");
+    dropdown2.disabled = false;
+
+    const todosCoppy = [...todos]
+    var listElements = todosCoppy.slice((page-1) * itemsPerPage, itemsPerPage);
+    setListElements(listElements);
+    document.getElementById("removeSearchButton").style.display = "none";
+    setTaskNameInput("");
+  } 
 
   const searchTodo = () => {
     const todosCoppy = [...todos];
@@ -166,6 +178,7 @@ function List() {
         }
       }
       setListElements(searchTaskList);
+      document.getElementById("removeSearchButton").style.display = "block";
     }
     else{
       const dropdown1 = document.getElementById("selectItemsPerPage");
@@ -176,6 +189,7 @@ function List() {
       const todosCoppy = [...todos]
       var listElements = todosCoppy.slice((page-1) * itemsPerPage, itemsPerPage);
       setListElements(listElements);
+      document.getElementById("removeSearchButton").style.display = "none";
     } 
   }
 
@@ -236,10 +250,7 @@ function List() {
 
   return (
     <div id="taskList">
-      <div id="headList">
-        <b>Womit ich mich beschäftigt habe:</b>
-      </div>
-      <div className='taskList'>
+      <div className='todo-list'>
         <p>Todo-List - total Tasks: {todos.length}</p>
       </div>
       <Alert
@@ -304,7 +315,11 @@ function List() {
           value={taskNameInput}
         ></input>
         <Button
-            id="searchTodoButton"
+            id="removeSearchButton"
+            onClick={removeSearchTodo}
+        >x
+        </Button>
+        <Button
             onClick={searchTodo}
         >Search
         </Button>
@@ -326,6 +341,7 @@ function List() {
       }   
        <div id="inputs">
         <input
+          id='inputsTaskName'
           placeholder="Task Name"
           onChange={changeText}
           value={textInput}

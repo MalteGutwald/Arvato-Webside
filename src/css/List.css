@@ -32,18 +32,14 @@
     display: inline;
     width: 100%;
 }
-.searchTaskDiv #searchTodoButton{
-    display: inline;
-    width: 100%;
-}
-
 #taskList{
     margin-top: 50px;
     margin-left: 25%;
     margin-right: 25%;
     width: 50%;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 5px;
+    
     border: 1px solid black;
 }
 #headList{
@@ -67,6 +63,9 @@
 Button{
     width: 80px;
  }
+ #removeSearchButton{
+    display: none
+ }
 div #taskList :last-child{
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -77,10 +76,10 @@ div #taskList :last-child{
 #error2{
     display: none
 }
-.taskList{
+.todo-list{
     background-color: #4a403f;
 }
-.taskList p{
+.todo-list p{
     color: #ffffff;
     margin-bottom: 0;
 }
