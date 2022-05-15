@@ -126,45 +126,46 @@ function List() {
   }
   const removeTodo = (index) => {
     const newTodos = [...todos]
-    const startValue = ((page-1) * itemsPerPage);
-      newTodos.splice(index + startValue,1);
-      setTodos(newTodos);
-      localStorage.setItem("items", JSON.stringify(newTodos));
+    let begin = ((page-1) * itemsPerPage + index);
+    newTodos.splice(begin, 1);
+    setTodos(newTodos);
+    localStorage.setItem("items", JSON.stringify(newTodos));
       
-      //changePageOptions
-      const todosCoppy = newTodos;
-      var pageOptionsLoop = [];
-      var pageOptionLoopString = "";
+    //changePageOptions
+    const todosCoppy = newTodos;
+    var pageOptionsLoop = [];
+    var pageOptionLoopString = "";
 
-      for(let i=1; (todosCoppy.length / parseFloat(itemsPerPage)) > (i-1); i++){
-        pageOptionLoopString = i.toString();
-        pageOptionsLoop.push(pageOptionLoopString);
-      }
-      if(pageOptionsLoop.length === 0){
-        setPageOptions(["1"]);  
-      } 
-      else{
-        setPageOptions(pageOptionsLoop);
-      }
-      // so wäre eine bessere Lösung, klappt aber nicht.
-      // changePageOptions(itemsPerPage);
+    for(let i=1; (todosCoppy.length / parseFloat(itemsPerPage)) > (i-1); i++){
+      pageOptionLoopString = i.toString();
+      pageOptionsLoop.push(pageOptionLoopString);
+    }
+    if(pageOptionsLoop.length === 0){
+      setPageOptions(["1"]);  
+    } 
+    else{
+     setPageOptions(pageOptionsLoop);
+    }
+    // so wäre eine bessere Lösung, klappt aber nicht.
+    // changePageOptions(itemsPerPage);
 
-      changeListElements_remove(index);
+    changeListElements_remove(index);
   }
   const changeListElements_remove = (e) => {
     const todosCoppy = [...todos]
     //entfernt Element
     todosCoppy.splice(e + itemsPerPage * (page-1),1);
-    const startValue = ((page-1) * itemsPerPage);
 
-    var listElements = todosCoppy.slice(startValue, itemsPerPage);
+    let startValue = ((page-1) * itemsPerPage);
+
+    var listElements = todosCoppy.slice(startValue, parseInt(startValue) + parseInt(itemsPerPage));
     if(listElements.length === 0){
-      listElements = todosCoppy.slice((page-2)*itemsPerPage, itemsPerPage);
+      startValue = ((page-2) * itemsPerPage);
+      listElements = todosCoppy.slice(startValue, parseInt(startValue) + parseInt(itemsPerPage));
       setListElements(listElements);
       if(page !==1){
         setPage(page-1);
       }
-      changePageOptions(pageOptions.pop)
     }
     else{
       setListElements(listElements);
