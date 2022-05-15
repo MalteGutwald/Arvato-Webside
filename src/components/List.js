@@ -47,16 +47,21 @@ function List() {
     return pagesArray;
   });
 
+  const [listElements, setListElements] = useState(() =>{
+    const todosCoppy = [...todos];
+    var initialListElements = todosCoppy.slice(0, 5);
+    return initialListElements;
+  });
+
   const [textInput, setTextInput] = useState("");
   const [taskNameInput, setTaskNameInput] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState("5");
   const [page, setPage] = useState(1);
  
-  const [listElements, setListElements] = useState(() =>{
-    const todosCoppy = [...todos]
-    var listElements = todosCoppy.slice(0, 5);
-    return listElements
-  });
+  
+
+  //schlechter Code hier:
+  const [indexList, setIndexList] = useState([]);
 
   const changeItemsPerPage = (e) => {
     setPage(1);
@@ -112,63 +117,44 @@ function List() {
       setPageOptions(pageOptionsLoop);
     } 
   }
-
-  const changeTodos = (index) => {
-    const newTodos = [...todos]
-    const startValue = ((page-1) * itemsPerPage);
-    if (newTodos[index + startValue].done){
-      newTodos[index + startValue].done = false;
-    }
-    else {
-      newTodos[index + startValue].done = true;
-    }
-    setTodos(newTodos);
-  }
-  const removeTodo = (index) => {
-    const newTodos = [...todos]
-    let begin = ((page-1) * itemsPerPage + index);
-    newTodos.splice(begin, 1);
-    setTodos(newTodos);
-    localStorage.setItem("items", JSON.stringify(newTodos));
-      
-    //changePageOptions
-    const todosCoppy = newTodos;
-    var pageOptionsLoop = [];
-    var pageOptionLoopString = "";
-
-    for(let i=1; (todosCoppy.length / parseFloat(itemsPerPage)) > (i-1); i++){
-      pageOptionLoopString = i.toString();
-      pageOptionsLoop.push(pageOptionLoopString);
-    }
-    if(pageOptionsLoop.length === 0){
-      setPageOptions(["1"]);  
-    } 
-    else{
-     setPageOptions(pageOptionsLoop);
-    }
-    // so wäre eine bessere Lösung, klappt aber nicht.
-    // changePageOptions(itemsPerPage);
-
-    changeListElements_remove(index);
-  }
+  
   const changeListElements_remove = (e) => {
-    const todosCoppy = [...todos]
+    const todosCoppy = [...todos];
     //entfernt Element
-    todosCoppy.splice(e + itemsPerPage * (page-1),1);
+    if(indexList.length === 0){
+      todosCoppy.splice(e + itemsPerPage * (page-1),1);
 
-    let startValue = ((page-1) * itemsPerPage);
+      let startValue = ((page-1) * itemsPerPage);
 
-    var listElements = todosCoppy.slice(startValue, parseInt(startValue) + parseInt(itemsPerPage));
-    if(listElements.length === 0){
-      startValue = ((page-2) * itemsPerPage);
-      listElements = todosCoppy.slice(startValue, parseInt(startValue) + parseInt(itemsPerPage));
-      setListElements(listElements);
-      if(page !==1){
-        setPage(page-1);
+      var listElements = todosCoppy.slice(startValue, parseInt(startValue) + parseInt(itemsPerPage));
+      if(listElements.length === 0){
+        startValue = ((page-2) * itemsPerPage);
+        listElements = todosCoppy.slice(startValue, parseInt(startValue) + parseInt(itemsPerPage));
+        setListElements(listElements);
+        if(page !==1){
+          setPage(page-1);
+        }
+      }
+      else{
+        setListElements(listElements);
       }
     }
     else{
-      setListElements(listElements);
+      // warum ist listElements hier defined?
+
+      const todosCoppy = [...todos];
+      const searchTaskList = [];
+     
+      for(let i =0; i < todosCoppy.length; i++){
+        if (todos[i].description.includes(taskNameInput)) {
+          searchTaskList.push(todos[i]);
+        }
+      }
+      searchTaskList.splice(e,1);
+      setListElements(searchTaskList);
+
+      indexList.shift();
+      setIndexList(indexList);
     }
   }
   const removeSearchTodo = () => {
@@ -186,12 +172,13 @@ function List() {
     setListElements(listElements);
     document.getElementById("removeSearchButton").style.display = "none";
     setTaskNameInput("");
+    setIndexList([]);
   } 
 
   const searchTodo = () => {
     const todosCoppy = [...todos];
     const searchTaskList = [];
-
+    const indexListLoop = [];
     if(taskNameInput.length !==0){
       const dropdown1 = document.getElementById("selectItemsPerPage");
       dropdown1.disabled = true;
@@ -201,8 +188,10 @@ function List() {
       for(let i =0; i < todosCoppy.length; i++){
         if (todos[i].description.includes(taskNameInput)) {
           searchTaskList.push(todos[i]);
+          indexListLoop.push(i);
         }
       }
+      setIndexList(indexListLoop);
       setListElements(searchTaskList);
       document.getElementById("removeSearchButton").style.display = "block";
     }
@@ -242,7 +231,6 @@ function List() {
       }, 2500);
     }
     else{
-      console.log("hier")
       const newTodos = [...todos, {description: textInput, done: false}]
       setTodos(newTodos);
       //warum wird hier todos nicht verändert?
@@ -276,6 +264,72 @@ function List() {
 
     var listElements = e.slice(begin, end);
     setListElements(listElements);
+
+    const dropdown1 = document.getElementById("selectItemsPerPage");
+    dropdown1.disabled = false;
+    const dropdown2 = document.getElementById("selectPage");
+    dropdown2.disabled = false;
+    
+    setTaskNameInput("");
+    setIndexList([]);
+  }
+  const changeTodos = (index) => {
+    const newTodos = [...todos]
+    const startValue = ((page-1) * itemsPerPage);
+
+    console.log(indexList.length);
+
+    if(indexList.length ===0){
+      if (newTodos[index + startValue].done){
+        newTodos[index + startValue].done = false;
+      }
+      else {
+        newTodos[index + startValue].done = true;
+      }
+      setTodos(newTodos);
+    }
+    else{
+      console.log(3)
+      console.log(newTodos[indexList[index]].done)
+      newTodos[indexList[index]].done = !newTodos[indexList[index]].done;
+      setTodos(newTodos);
+    }
+  }
+  const removeTodo = (index) => {
+    const newTodos = [...todos]
+
+    if(indexList.length ===0 ){
+      let begin = ((page-1) * itemsPerPage + index);
+      newTodos.splice(begin, 1);
+      setTodos(newTodos);
+      localStorage.setItem("items", JSON.stringify(newTodos));
+    }
+    else{
+      let begin = (indexList[index]);
+      newTodos.splice(begin, 1);
+      setTodos(newTodos);
+      localStorage.setItem("items", JSON.stringify(newTodos));
+    }
+
+    //changePageOptions
+    const todosCoppy = newTodos;
+    var pageOptionsLoop = [];
+    var pageOptionLoopString = "";
+
+    for(let i=1; (todosCoppy.length / parseFloat(itemsPerPage)) > (i-1); i++){
+      pageOptionLoopString = i.toString();
+      pageOptionsLoop.push(pageOptionLoopString);
+    }
+    if(pageOptionsLoop.length === 0){
+      setPageOptions(["1"]);  
+    } 
+    else{
+    setPageOptions(pageOptionsLoop);
+    }
+    // so wäre eine bessere Lösung, klappt aber nicht.
+    // changePageOptions(itemsPerPage);
+
+    changeListElements_remove(index);
   }
 
   return (
