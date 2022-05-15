@@ -310,7 +310,7 @@ function List() {
 
         <div className='searchTaskDiv'>
         <input
-          placeholder="Enter Taskname"
+          placeholder="Enter Task Name"
           onChange={changeTaskName}
           value={taskNameInput}
         ></input>
