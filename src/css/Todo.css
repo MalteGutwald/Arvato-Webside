@@ -1,3 +1,42 @@
+.container {
+    position: relative;
+    display: inline-block;
+  }
+  .button {
+    padding: 0;
+    width: 50px;
+    border: 0;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    outline: 0;
+    font-size: 40px;
+  }
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 300px;
+    z-index: 2;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    padding: 8px 12px;
+  }
+  
+  li:hover {
+    background-color: rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+  }
+
 .todoElement_done{
     display: flex;
     justify-content: right;
@@ -16,6 +55,13 @@
 .todoElement_false :first-child{
     margin: auto;
 }
+.todoElement_done Button{
+    background-color: black !important;
+}
+.todoElement_false Button{
+    background-color: black !important;
+}
+
 
 Button{
    width: 80px;
@@ -38,9 +84,21 @@ p{
     p{
         font-size: 25px;
     }
+    .todoElement_done Button{
+        width: 60px;
+    }
+    .todoElement_false Button{
+        width: 60px;
+    }
 }
 @media (max-width: 600px) {
     p{
         font-size: 20px;
+    }
+    .todoElement_done Button{
+        width: 40px;
+    }
+    .todoElement_false Button{
+        width: 40px;
     }
 }

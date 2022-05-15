@@ -27,9 +27,17 @@
         border-radius: 22%;
         height: 100px;
     }
+    #display2{
+        display: none;
+    }
 
-    @media (max-width: 500px) {
-        #display{
+    @media (max-width: 600px) {
+        #display1{
             display: none
+        }
+    }
+    @media (width < 600px) {
+        #display2{
+            display: inline;
         }
     }
