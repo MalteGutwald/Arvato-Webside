@@ -9,24 +9,24 @@ function List() {
   const initialPageOptions = ["1","2","3","4"];
 
   const initialList = [
-    {description: "Lorem ",done: true},
-    {description: "ipsum ",done: false},
-    {description: "dolor ",done: true},
-    {description: "sit ",done: false},
-    {description: "amet",done: true},
-    {description: "consetetur ",done: true},
-    {description: "sadipscing ",done: true},
-    {description: "elitr",done: false},
-    {description: "sed ",done: false},
-    {description: "diam ",done: true},
-    {description: "nonumy ",done: true},
-    {description: "eirmod ",done: true},
-    {description: "tempor ",done: true},
-    {description: "invidunt ",done: true},
-    {description: "ut ",done: true},
-    {description: "labore ",done: true},
-    {description: "et ",done: true},
-    {description: "dolore",done: true}
+    {description: "Lorem ", done: true},
+    {description: "ipsum ", done: false},
+    {description: "dolor ", done: true},
+    {description: "sit ", done: false},
+    {description: "amet", done: true},
+    {description: "consetetur ", done: true},
+    {description: "sadipscing ", done: true},
+    {description: "elitr", done: false},
+    {description: "sed ", done: false},
+    {description: "diam ", done: true},
+    {description: "nonumy ", done: true},
+    {description: "eirmod ", done: true},
+    {description: "tempor ", done: true},
+    {description: "invidunt ", done: true},
+    {description: "ut ", done: true},
+    {description: "labore ", done: true},
+    {description: "et ", done: true},
+    {description: "dolore", done: true}
 ];
 
   const [todos, setTodos] = useState(() =>{
@@ -177,7 +177,11 @@ function List() {
     dropdown2.disabled = false;
 
     const todosCoppy = [...todos]
-    var listElements = todosCoppy.slice((page-1) * itemsPerPage, itemsPerPage);
+    let begin  = (page-1) * itemsPerPage;
+    begin = parseInt(begin);
+    let end = parseInt(begin) + parseInt(itemsPerPage);
+
+    var listElements = todosCoppy.slice(begin, end);
     setListElements(listElements);
     document.getElementById("removeSearchButton").style.display = "none";
     setTaskNameInput("");
