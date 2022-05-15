@@ -241,6 +241,7 @@ function List() {
       }, 2500);
     }
     else{
+      console.log("hier")
       const newTodos = [...todos, {description: textInput, done: false}]
       setTodos(newTodos);
       //warum wird hier todos nicht verändert?
@@ -268,9 +269,11 @@ function List() {
     setTextInput("");
   }
   const changeListElements_add = (e) => {
-    const startValue = ((page-1) * itemsPerPage);
+    let begin  = (page-1) * itemsPerPage;
+    begin = parseInt(begin);
+    let end = begin + parseInt(itemsPerPage);
 
-    var listElements = e.slice(startValue, itemsPerPage);
+    var listElements = e.slice(begin, end);
     setListElements(listElements);
   }
 
