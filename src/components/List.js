@@ -196,6 +196,8 @@ function List() {
       document.getElementById("removeSearchButton").style.display = "block";
     }
     else{
+      removeSearchTodo()
+      /*
       const dropdown1 = document.getElementById("selectItemsPerPage");
       dropdown1.disabled = false;
       const dropdown2 = document.getElementById("selectPage");
@@ -206,6 +208,7 @@ function List() {
 
       setListElements(listElements);
       document.getElementById("removeSearchButton").style.display = "none";
+      */
     } 
   }
 
@@ -277,8 +280,6 @@ function List() {
     const newTodos = [...todos]
     const startValue = ((page-1) * itemsPerPage);
 
-    console.log(indexList.length);
-
     if(indexList.length ===0){
       if (newTodos[index + startValue].done){
         newTodos[index + startValue].done = false;
@@ -289,8 +290,6 @@ function List() {
       setTodos(newTodos);
     }
     else{
-      console.log(3)
-      console.log(newTodos[indexList[index]].done)
       newTodos[indexList[index]].done = !newTodos[indexList[index]].done;
       setTodos(newTodos);
     }
